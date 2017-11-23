@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Book Management</title>
+</head>
+<link href="../css/bootstrap.min.css" type="text/css" rel="stylesheet">
+<body>
+<div class="container">
+    <h3 class="text-center">Book Management</h3>
+    <hr>
+    <div class="row my-4 brand-header">
+        <div class="col-sm-6">
+            <a href="#">
+                <img class="img-fluid rounded" src="http://placehold.it/700x300" alt="">
+            </a>
+        </div>
+        <div class="col-sm-6 text-center ">
+            <h5>Brand Name</h5>
+        </div>
+    </div>
+    <form class="book-detail" >
+        <div class="row py-4">
+            <div class="col-sm-4">
+                <input type="text" name="title" class="form-control" placeholder="Title">
+            </div>
+            <div class="col-sm-4">
+                <input type="text" name="author" class="form-control" placeholder="Author">
+            </div>
+            <div class="col-sm-4">
+                <input type="text" name="topic" class="form-control" placeholder="Topic">
+            </div>
+        </div>
+        <div class="row py-4">
+            <div class="col-sm-4">
+                <input type="text" name="year" class="form-control" placeholder="Year">
+            </div>
+            <div class="col-sm-4">
+                <input type="text" name="isbn" class="form-control" placeholder="ISBN">
+            </div>
+            <div class="col-sm-4">
+                <input type="text" name="sub-topic" class="form-control" placeholder="Sub Topic">
+            </div>
+        </div>
+        <div class="row my-4 text-center">
+            <div class="col-sm-4">
+                <button id="view-all" type="button" class="btn btn-success">View all</button>
+            </div>
+            <div class="col-sm-4">
+                <button type="button" class="btn btn-success">Search Entry</button>
+            </div>
+            <div class="col-sm-4">
+                <button id="add-entry" type="button" class="btn btn-success">Add Entry</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<script src="../js/jquery.min.js" onload="window.$ = window.jQuery = module.exports;"></script>
+<script src ="../js/popper.min.js" ></script>
+<script src="../js/bootstrap.min.js"></script>
+<script> require('../js/custom.js')</script>
+
+</body>
+</html>
