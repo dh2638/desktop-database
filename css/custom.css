@@ -1,0 +1,10 @@
+.brand-header h5 {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+}
+.brand-header img{
+    width: 200px
+}

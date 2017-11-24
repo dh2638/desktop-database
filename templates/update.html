@@ -2,51 +2,53 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Hello World!</title>
+    <title>Update book details</title>
 </head>
 <link href="../css/bootstrap.min.css" type="text/css" rel="stylesheet">
 <body>
 <div class="container">
     <h3 class="text-center">Book Management</h3>
     <hr>
-    <div class="update-page">
-        <form>
-            <div class="row py-4">
-                <div class="col-sm-4">
-                    <input type="text" class="form-control" placeholder="Title">
-                </div>
-                <div class="col-sm-4">
-                    <input type="text" class="form-control" placeholder="Author">
-                </div>
-                <div class="col-sm-4">
-                    <input type="text" class="form-control" placeholder="Topic">
-                </div>
+    <p><a class="btn btn-primary btn-lg" id="update-back-btn" href="#">Back</a></p>
+    <div class="alert entry alert-dismissible alert-success" style="display: none">
+        Successfully updated entry in database
+    </div>
+    <div class="alert entry-danger alert-dismissible alert-danger" style="display: none">
+        Please fill all fields
+    </div>
+    <div id="update-page">
+        <div class="row py-4">
+            <div class="col-sm-4">
+                <input type="text" name="title" class="form-control" placeholder="Title">
             </div>
-            <div class="row py-4">
-                <div class="col-sm-4">
-                    <input type="text" class="form-control" placeholder="Year">
-                </div>
-                <div class="col-sm-4">
-                    <input type="text" class="form-control" placeholder="ISBN">
-                </div>
-                <div class="col-sm-4">
-                    <input type="text" class="form-control" placeholder="Sub Topic">
-                </div>
+            <div class="col-sm-4">
+                <input type="text" name="author" class="form-control" placeholder="Author">
             </div>
-            <div class="row my-4">
-                <div class="col-sm-12 text-center">
-                    <button type="button" class="btn btn-success">Update</button>
-                </div>
+            <div class="col-sm-4">
+                <input type="text" name="topic" class="form-control" placeholder="Topic">
             </div>
-        </form>
+        </div>
+        <div class="row py-4">
+            <div class="col-sm-4">
+                <input type="text" name="year" class="form-control" placeholder="Year">
+            </div>
+            <div class="col-sm-4">
+                <input type="text" name="isbn" class="form-control" placeholder="ISBN">
+            </div>
+            <div class="col-sm-4">
+                <input type="text" name="sub-topic" class="form-control" placeholder="Sub Topic">
+            </div>
+        </div>
+        <div class="row my-4">
+            <div class="col-sm-12 text-center">
+                <button type="button" id="update-data-btn" class="btn btn-success">Update</button>
+            </div>
+        </div>
     </div>
 </div>
-
-
 <script src="../js/jquery.min.js" onload="window.$ = window.jQuery = module.exports;"></script>
-<script src = "js/popper.min.js" ></script>
+<script src="../js/popper.min.js" ></script>
 <script src="../js/bootstrap.min.js"></script>
 <script> require('../js/custom.js')</script>
-
 </body>
 </html>
