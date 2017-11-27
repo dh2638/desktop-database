@@ -1,26 +1,59 @@
 {
-  "name": "electron-quick-start",
+  "name": "Book",
   "version": "1.0.0",
-  "description": "A minimal Electron application",
+  "description": "Book Management Software",
   "main": "main.js",
+  "email": "sainineeraj1234@gmail.com",
   "scripts": {
-    "start": "electron ."
+    "postinstall": "install-app-deps",
+    "start": "npm install && electron .",
+    "pack": "build --dir",
+    "dist": "build"
   },
-  "repository": "https://github.com/electron/electron-quick-start",
+  "repository": "https://github.com/dh2638/desktop-database",
   "keywords": [
     "Electron",
-    "quick",
-    "start",
-    "tutorial",
-    "demo"
+    "book",
+    "management"
   ],
-  "author": "GitHub",
-  "license": "CC0-1.0",
+  "author": {
+    "name": "Neeraj Kumar",
+    "email": "sainineeraj1234@gmail.com",
+    "url": ""
+  },
+  "license": "",
   "devDependencies": {
+    "electron-builder": "^19.46.4",
     "electron": "~1.7.8"
   },
   "dependencies": {
     "dblite": "^0.8.0",
     "handlebars": "^4.0.11"
+  },
+  "build": {
+    "appId": "book",
+    "dmg": {
+      "contents": [
+        {
+          "x": 110,
+          "y": 150
+        },
+        {
+          "x": 240,
+          "y": 150,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ]
+    },
+    "win": {
+      "target": "NSIS"
+    }
   }
 }

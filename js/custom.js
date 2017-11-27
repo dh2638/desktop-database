@@ -1,21 +1,34 @@
 const {ipcRenderer} = require('electron');
-var remote = require('electron').remote;
+const remote = require('electron').remote;
 const BrowserWindow = remote.BrowserWindow;
 const ipcMain = remote.ipcMain;
 const url = require('url');
 const path = require('path');
 const dblite = require('dblite');
 const db = dblite('db.sqlite3');
-var window = remote.getCurrentWindow();
-var handlebar = require('handlebars');
+const window = remote.getCurrentWindow();
+const handlebar = require('handlebars');
+const selectors = {
+    title: $('[name="title"]'),
+    author: $('[name="author"]'),
+    topic: $('[name="topic"]'),
+    year: $('[name="year"]'),
+    isbn: $('[name="isbn"]'),
+    sub_topic: $('[name="sub-topic"]'),
+};
+const arr = ['title', 'author', 'topic', 'year', 'isbn', 'sub_topic'];
+
 
 function openNewWindow(template_name, parameter) {
+    var param = "";
+    if (parameter)
+        param = "?" + parameter;
     let win = new BrowserWindow({width: 800, height: 600});
     win.loadURL(url.format({
         pathname: path.join(__dirname, '../templates/' + template_name + '.html'),
         protocol: 'file:',
         slashes: true
-    }) + "?" + parameter);
+    }) + param);
     window.close();
 }
 
@@ -30,8 +43,30 @@ function get_param_value(param) {
     }
 }
 
+function set_param() {
+    var param = "";
+    for (i = 0; i < arr.length; i++) {
+        var value = selectors[arr[i]].val();
+        if (value)
+            param += arr[i] + "=" + value + "&"
+    }
+    return param
+}
+
+function get_param_query() {
+    var query = "";
+    for (i = 0; i < arr.length; i++) {
+        var value = get_param_value(arr[i]);
+        if (value && query)
+            query += ' OR ' + arr[i] + ' LIKE "%' + value + '%" ';
+        else if (value)
+            query = arr[i] + ' LIKE "%' + value + '%" '
+    }
+    return query
+}
+
 $(document).on('click', '#view-all', function () {
-    openNewWindow('list', undefined)
+    openNewWindow('list',)
 });
 
 $(document).on('click', '#update-back-btn', function () {
@@ -46,7 +81,8 @@ $(document).on('click', '#search-back-btn', function () {
     openNewWindow('index', undefined)
 });
 $(document).on('click', '#search-btn', function () {
-    openNewWindow('search', undefined)
+    var param = set_param();
+    openNewWindow('list', param)
 });
 $(document).on('click', '.update-data', function () {
     var id = $(this).data('id');
@@ -54,15 +90,15 @@ $(document).on('click', '.update-data', function () {
 });
 
 $(document).on('click', '#add-entry', function () {
-    var title = $('[name="title"]').val();
-    var author = $('[name="author"]').val();
-    var topic = $('[name="topic"]').val();
-    var year = $('[name="year"]').val();
-    var isbn = $('[name="isbn"]').val();
-    var sub_topic = $('[name="sub-topic"]').val();
+    var title = selectors.title.val();
+    var author = selectors.author.val();
+    var topic = selectors.topic.val();
+    var year = selectors.year.val();
+    var isbn = selectors.isbn.val();
+    var sub_topic = selectors.sub_topic.val();
     if (title && author && topic && year && isbn && sub_topic) {
         db.query('INSERT INTO book VALUES(null,?,?,?,?,?,?)', [title, author, topic, year, isbn, sub_topic]);
-        $('.alert.entry-danger').hide()
+        $('.alert.entry-danger').hide();
         $('.alert.entry').show()
     }
     else {
@@ -72,11 +108,10 @@ $(document).on('click', '#add-entry', function () {
 });
 $(document).ready(function () {
     if ($('#list-template').length) {
-        var search = get_param_value('search');
-        var search_query = ""
-        if (search) {
-            search_query = 'WHERE (id LIKE "%' + search + '%" OR title LIKE "%' + search + '%" OR author LIKE "%' + search + '%" OR topic LIKE "%' + search + '%" OR year LIKE "%' + search + '%" OR isbn LIKE "%' + search + '%" OR sub_topic LIKE "%' + search + '%");';
-        }
+        var param = get_param_query();
+        var search_query = "";
+        if (param)
+            search_query = 'WHERE (' + param + ');';
         var query = 'select * from book ' + search_query;
         var data = db.query('select * from book ' + search_query, function (err, rows) {
             var source = document.getElementById("list-template").innerHTML;
@@ -96,12 +131,12 @@ $(document).ready(function () {
     if ($('#update-page').length) {
         var id = get_param_value('book');
         db.query('SELECT * from book where id=' + id, function (err, rows) {
-            $('[name="title"]').val(rows[0][1]);
-            $('[name="author"]').val(rows[0][2]);
-            $('[name="topic"]').val(rows[0][3]);
-            $('[name="year"]').val(rows[0][4]);
-            $('[name="isbn"]').val(rows[0][5]);
-            $('[name="sub-topic"]').val(rows[0][6]);
+            selectors.title.val(rows[0][1]);
+            selectors.author.val(rows[0][2]);
+            selectors.topic.val(rows[0][3]);
+            selectors.year.val(rows[0][4]);
+            selectors.isbn.val(rows[0][5]);
+            selectors.sub_topic.val(rows[0][6]);
         })
     }
 });
@@ -120,12 +155,12 @@ $(document).on('click', '#delete-selected', function () {
 
 $(document).on('click', '#update-data-btn', function () {
     var id = get_param_value('book');
-    var title = $('[name="title"]').val();
-    var author = $('[name="author"]').val();
-    var topic = $('[name="topic"]').val();
-    var year = $('[name="year"]').val();
-    var isbn = $('[name="isbn"]').val();
-    var sub_topic = $('[name="sub-topic"]').val();
+    var title = selectors.title.val();
+    var author = selectors.author.val();
+    var topic = selectors.topic.val();
+    var year = selectors.year.val();
+    var isbn = selectors.isbn.val();
+    var sub_topic = selectors.sub_topic.val();
     if (title && author && topic && year && isbn && sub_topic) {
         db.query('UPDATE book SET title="' + title + '", author="' + author + '", topic="' + topic +
             '", year="' + year + '", isbn="' + isbn + '", sub_topic="' + sub_topic + '" where id=' + id + ';');
@@ -136,9 +171,4 @@ $(document).on('click', '#update-data-btn', function () {
         $('.alert.entry').hide();
         $('.alert.entry-danger').show()
     }
-});
-
-$(document).on('click', '#search-data-btn', function () {
-    var search = $('[name="search"]').val();
-    openNewWindow('list', 'search=' + search);
 });
