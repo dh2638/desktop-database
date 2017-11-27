@@ -5,13 +5,13 @@ const {app, BrowserWindow, ipcMain} = electron;
 
 const path = require('path');
 const url = require('url');
-const dblite = require('dblite');
-const db = dblite('./resources/db.sqlite3');
+const dblite = require('dblite').withSQLite('3.8.6+');
+const db = dblite('db.sqlite3');
 
 function get_or_create_table(){
     var query = "SELECT name FROM sqlite_master WHERE type='table' AND name='book';";
     db.query(query, function (err, rows) {
-        if(!rows){
+        if(!err){
             query = "CREATE TABLE book\n" +
                 "(\n" +
                 "    id INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
@@ -23,11 +23,10 @@ function get_or_create_table(){
                 "    sub_topic VARCHAR NOT NULL\n" +
                 ");";
             db.query(query, function (err, rows) {
+
             });
-
         }
-
-    })
+    });
 }
 get_or_create_table();
 
@@ -46,7 +45,7 @@ function createWindow() {
         protocol: 'file:',
         slashes: true
     }));
-
+    mainWindow.webContents.openDevTools();
 
     // Open the DevTools.
     // mainWindow.webContents.openDevTools()
