@@ -1,14 +1,13 @@
-const {ipcRenderer} = require('electron');
-const remote = require('electron').remote;
-const BrowserWindow = remote.BrowserWindow;
-const ipcMain = remote.ipcMain;
-const url = require('url');
-const path = require('path');
-const dblite = require('dblite');
-const db = dblite('db.sqlite3');
-const window = remote.getCurrentWindow();
-const handlebar = require('handlebars');
-const selectors = {
+var remote = require('electron').remote;
+var BrowserWindow = remote.BrowserWindow;
+var ipcMain = remote.ipcMain;
+var url = require('url');
+var path = require('path');
+var dblite = require('dblite');
+var db = dblite('db.sqlite3');
+var window = remote.getCurrentWindow();
+var handlebar = require('handlebars');
+var selectors = {
     title: $('[name="title"]'),
     author: $('[name="author"]'),
     topic: $('[name="topic"]'),
@@ -16,7 +15,7 @@ const selectors = {
     isbn: $('[name="isbn"]'),
     sub_topic: $('[name="sub-topic"]'),
 };
-const arr = ['title', 'author', 'topic', 'year', 'isbn', 'sub_topic'];
+var arr = ['title', 'author', 'topic', 'year', 'isbn', 'sub_topic'];
 
 
 function openNewWindow(template_name, parameter) {

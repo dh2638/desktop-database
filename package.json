@@ -31,7 +31,7 @@
     "handlebars": "^4.0.11"
   },
   "build": {
-    "appId": "book",
+    "appId": "Book",
     "dmg": {
       "contents": [
         {
@@ -50,7 +50,8 @@
       "target": [
         "AppImage",
         "deb"
-      ]
+      ],
+      "extraResources": ["db.sqlite3"]
     },
     "win": {
       "target": "NSIS"
