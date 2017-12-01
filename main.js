@@ -6,7 +6,6 @@ const {app, BrowserWindow, ipcMain} = electron;
 const path = require('path');
 const url = require('url');
 const dblite = require('dblite');
-
 const dbpath = path.join(app.getPath('userData'), 'db.sqlite3');
 const db = dblite(dbpath);
 
@@ -25,11 +24,10 @@ function get_or_create_table() {
                 "    sub_topic VARCHAR NOT NULL\n" +
                 ");";
             db.query(query, function (err, rows) {
+
             });
-
         }
-
-    })
+    });
 }
 
 get_or_create_table();
@@ -49,7 +47,7 @@ function createWindow() {
         protocol: 'file:',
         slashes: true
     }));
-
+    mainWindow.webContents.openDevTools();
 
     // Open the DevTools.
     // mainWindow.webContents.openDevTools()
@@ -66,7 +64,7 @@ function createWindow() {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', createWindow)
+app.on('ready', createWindow);
 
 // Quit when all windows are closed.
 app.on('window-all-closed', function () {
