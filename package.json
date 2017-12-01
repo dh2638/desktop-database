@@ -50,8 +50,7 @@
       "target": [
         "AppImage",
         "deb"
-      ],
-      "extraResources": ["db.sqlite3"]
+      ]
     },
     "win": {
       "target": "NSIS"

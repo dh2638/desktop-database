@@ -1,10 +1,12 @@
 var remote = require('electron').remote;
 var BrowserWindow = remote.BrowserWindow;
 var ipcMain = remote.ipcMain;
+var app = remote.app;
 var url = require('url');
 var path = require('path');
 var dblite = require('dblite');
-var db = dblite('db.sqlite3');
+var dbpath = path.join(app.getPath('userData'), 'db.sqlite3');
+var db = dblite(dbpath);
 var window = remote.getCurrentWindow();
 var handlebar = require('handlebars');
 var selectors = {

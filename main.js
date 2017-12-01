@@ -6,12 +6,14 @@ const {app, BrowserWindow, ipcMain} = electron;
 const path = require('path');
 const url = require('url');
 const dblite = require('dblite');
-const db = dblite('./resources/db.sqlite3');
 
-function get_or_create_table(){
+const dbpath = path.join(app.getPath('userData'), 'db.sqlite3');
+const db = dblite(dbpath);
+
+function get_or_create_table() {
     var query = "SELECT name FROM sqlite_master WHERE type='table' AND name='book';";
     db.query(query, function (err, rows) {
-        if(!rows){
+        if (err == null) {
             query = "CREATE TABLE book\n" +
                 "(\n" +
                 "    id INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
@@ -29,6 +31,7 @@ function get_or_create_table(){
 
     })
 }
+
 get_or_create_table();
 
 
