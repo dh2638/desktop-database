@@ -9,29 +9,6 @@ const dblite = require('dblite');
 const dbpath = path.join(app.getPath('userData'), 'db.sqlite3');
 const db = dblite(dbpath);
 
-function get_or_create_table() {
-    var query = "SELECT name FROM sqlite_master WHERE type='table' AND name='book';";
-    db.query(query, function (err, rows) {
-        if (err == null) {
-            query = "CREATE TABLE book\n" +
-                "(\n" +
-                "    id INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
-                "    title VARCHAR NOT NULL,\n" +
-                "    author VARCHAR NOT NULL,\n" +
-                "    topic VARCHAR NOT NULL,\n" +
-                "    year VARCHAR NOT NULL,\n" +
-                "    isbn VARCHAR NOT NULL,\n" +
-                "    sub_topic VARCHAR NOT NULL\n" +
-                ");";
-            db.query(query, function (err, rows) {
-
-            });
-        }
-    });
-}
-
-get_or_create_table();
-
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -47,7 +24,6 @@ function createWindow() {
         protocol: 'file:',
         slashes: true
     }));
-    mainWindow.webContents.openDevTools();
 
     // Open the DevTools.
     // mainWindow.webContents.openDevTools()

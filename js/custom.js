@@ -19,6 +19,27 @@ var selectors = {
 };
 var arr = ['title', 'author', 'topic', 'year', 'isbn', 'sub_topic'];
 
+function get_or_create_table() {
+    var query = "SELECT name FROM sqlite_master WHERE type='table' AND name='book';";
+    db.query(query, function (err, rows) {
+        if (rows.length < 1) {
+            query = "CREATE TABLE book\n" +
+                "(\n" +
+                "    id INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
+                "    title VARCHAR NOT NULL,\n" +
+                "    author VARCHAR NOT NULL,\n" +
+                "    topic VARCHAR NOT NULL,\n" +
+                "    year VARCHAR NOT NULL,\n" +
+                "    isbn VARCHAR NOT NULL,\n" +
+                "    sub_topic VARCHAR NOT NULL\n" +
+                ");";
+            db.query(query, function (err, rows) {
+
+            });
+        }
+    });
+}
+
 
 function openNewWindow(template_name, parameter) {
     var param = "";
@@ -140,6 +161,7 @@ $(document).ready(function () {
             selectors.sub_topic.val(rows[0][6]);
         })
     }
+    get_or_create_table();
 });
 
 
