@@ -4,7 +4,7 @@ var ipcMain = remote.ipcMain;
 var app = remote.app;
 var url = require('url');
 var path = require('path');
-var dblite = require('dblite');
+var dblite = require('dblite').withSQLite('3.8.6+');
 var dbpath = path.join(app.getPath('userData'), 'db.sqlite3');
 var db = dblite(dbpath);
 var window = remote.getCurrentWindow();
@@ -18,12 +18,13 @@ var selectors = {
     sub_topic: $('[name="sub-topic"]'),
 };
 var arr = ['title', 'author', 'topic', 'year', 'isbn', 'sub_topic'];
-
+var success_alert = $('#card-alert-success');
+var error_alert = $('#card-alert-error');
 function get_or_create_table() {
     var query = "SELECT name FROM sqlite_master WHERE type='table' AND name='book';";
     db.query(query, function (err, rows) {
         if (rows.length < 1) {
-            query = "CREATE TABLE book\n" +
+            query = "CREATE TABLE book\n" +sqlite_master
                 "(\n" +
                 "    id INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
                 "    title VARCHAR NOT NULL,\n" +
@@ -45,12 +46,13 @@ function openNewWindow(template_name, parameter) {
     var param = "";
     if (parameter)
         param = "?" + parameter;
-    let win = new BrowserWindow({width: 800, height: 600});
+    let win = new BrowserWindow({width: window.innerWidth, height: window.innerHeight});
     win.loadURL(url.format({
         pathname: path.join(__dirname, '../templates/' + template_name + '.html'),
         protocol: 'file:',
         slashes: true
     }) + param);
+    win.maximize();
     window.close();
 }
 
@@ -75,10 +77,10 @@ function set_param() {
     return param
 }
 
-function get_param_query() {
+function get_search_query() {
     var query = "";
+    var value = get_param_value('search');
     for (i = 0; i < arr.length; i++) {
-        var value = get_param_value(arr[i]);
         if (value && query)
             query += ' OR ' + arr[i] + ' LIKE "%' + value + '%" ';
         else if (value)
@@ -87,8 +89,11 @@ function get_param_query() {
     return query
 }
 
-$(document).on('click', '#view-all', function () {
-    openNewWindow('list',)
+$(document).on('click', '#view-all-btn', function () {
+    openNewWindow('list',undefined)
+});
+$(document).on('click', '#add-new_entry-btn', function () {
+    openNewWindow('add',undefined)
 });
 
 $(document).on('click', '#update-back-btn', function () {
@@ -102,9 +107,10 @@ $(document).on('click', '#list-back-btn', function () {
 $(document).on('click', '#search-back-btn', function () {
     openNewWindow('index', undefined)
 });
-$(document).on('click', '#search-btn', function () {
-    var param = set_param();
-    openNewWindow('list', param)
+$(document).on('click', '#search-entry', function () {
+    // var param = set_param();
+    var param =  $('[name="search"]').val();
+    openNewWindow('list', "search=" + param)
 });
 $(document).on('click', '.update-data', function () {
     var id = $(this).data('id');
@@ -120,17 +126,17 @@ $(document).on('click', '#add-entry', function () {
     var sub_topic = selectors.sub_topic.val();
     if (title && author && topic && year && isbn && sub_topic) {
         db.query('INSERT INTO book VALUES(null,?,?,?,?,?,?)', [title, author, topic, year, isbn, sub_topic]);
-        $('.alert.entry-danger').hide();
-        $('.alert.entry').show()
+        error_alert.hide();
+        success_alert.show()
     }
     else {
-        $('.alert.entry').hide();
-        $('.alert.entry-danger').show()
+        success_alert.hide();
+        error_alert.show()
     }
 });
 $(document).ready(function () {
     if ($('#list-template').length) {
-        var param = get_param_query();
+        var param = get_search_query();
         var search_query = "";
         if (param)
             search_query = 'WHERE (' + param + ');';
@@ -159,9 +165,19 @@ $(document).ready(function () {
             selectors.year.val(rows[0][4]);
             selectors.isbn.val(rows[0][5]);
             selectors.sub_topic.val(rows[0][6]);
+            M.updateTextFields();
         })
     }
+    $(".alert .close").click(function(){$(this).closest(".alert").fadeOut("slow")});
     get_or_create_table();
+    $('.modal').modal({
+            dismissible: true,
+            opacity: .5,
+            startingTop: '20%',
+            endingTop: '10%',
+        }
+    );
+
 });
 
 
@@ -187,11 +203,12 @@ $(document).on('click', '#update-data-btn', function () {
     if (title && author && topic && year && isbn && sub_topic) {
         db.query('UPDATE book SET title="' + title + '", author="' + author + '", topic="' + topic +
             '", year="' + year + '", isbn="' + isbn + '", sub_topic="' + sub_topic + '" where id=' + id + ';');
-        $('.alert.entry-danger').hide();
-        $('.alert.entry').show()
+        error_alert.hide();
+        success_alert.show()
     }
     else {
-        $('.alert.entry').hide();
-        $('.alert.entry-danger').show()
+        success_alert.hide();
+        error_alert.show()
     }
 });
+

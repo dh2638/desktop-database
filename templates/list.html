@@ -4,19 +4,37 @@
     <meta charset="UTF-8">
     <title>All Books</title>
 </head>
-<link href="../css/bootstrap.min.css" type="text/css" rel="stylesheet">
+<link href="../css/materialize.min.css" type="text/css" rel="stylesheet">
+<link href="../css/custom.css" type="text/css" rel="stylesheet">
+
 <body>
 <div class="container">
-    <h3 class="text-center">Books List</h3>
+    <h3 class="center ">Books List</h3>
     <hr>
     <div id="list-page">
         <p><a class="btn btn-primary btn-lg" id="list-back-btn" href="#">Back</a></p>
         <div class="row my-4">
+            <div id="card-alert-success" class="card alert green lighten-5 " style="display: none">
+                <div class="card-content green-text">
+                    <p>Entry Successfully deleted</p>
+                </div>
+                <button type="button" class="close green-text" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div id="card-alert-error" class="card alert red lighten-5 " style="display: none">
+                <div class="card-content red-text">
+                    <p>You need to check checkbox of row</p>
+                </div>
+                <button type="button" class="close red-text" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
             <div class="col-sm-12">
-                <table class="table table-striped table-hover table-bordered">
+                <table class="table bordered">
                     <thead class="thead-dark">
                     <tr>
-                        <th scope="col">#</th>
+                        <th scope="col">No.</th>
                         <th scope="col"></th>
                         <th scope="col">Title</th>
                         <th scope="col">Author</th>
@@ -31,12 +49,8 @@
                         <tr>
                             <th scope="row">{{ counter }}</th>
                             <th scope="row">
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input" name="counter_{{ id }}" type="checkbox"
-                                               value="{{ id }}">
-                                        &nbsp;</label>
-                                </div>
+                                <input type="checkbox" name="counter_{{ id }}" value="{{ id }}" class="filled-in" id="filled-in-{{ id }}" >
+                                <label for="filled-in-{{ id }}"></label>
                             </th>
                             <td><a class="update-data" href="#" data-id="{{ id }}">{{ title }}</a> </td>
                             <td>{{ author }}</td>
@@ -48,14 +62,13 @@
                     </script>
                     </tbody>
                 </table>
-                <input class="btn btn-primary btn-lg" id="delete-selected" type="submit" value="Delete Seleted">
+                <input class="btn pt-1" id="delete-selected" type="submit" value="Delete Seleted">
             </div>
         </div>
     </div>
 </div>
 <script src="../js/jquery.min.js" onload="window.$ = window.jQuery = module.exports;"></script>
-<script src = "../js/popper.min.js" ></script>
-<script src="../js/bootstrap.min.js"></script>
+<script src="../js/materialize.min.js"></script>
 <script src="../js/custom.js"></script>
 
 </body>

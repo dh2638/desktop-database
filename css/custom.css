@@ -8,3 +8,40 @@
 .brand-header img{
     width: 200px
 }
+.pb-5{
+    padding-bottom: 5rem;
+}
+.pt-5{
+    padding-top: 5rem;
+}
+.clickable{
+    cursor: pointer;
+}
+.pt-1{
+    margin-top: 1rem;
+}
+.py-2{
+    padding:2rem 0;
+}
+.alert button {
+    background: none;
+    border: none;
+    position: absolute;
+    top: 15px;
+    right: 10px;
+    font-size: 20px;
+    color: #fff;
+}
+.modal-overlay {
+    position: fixed;
+    z-index: 999;
+    top: -25%;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    height: 125%;
+    width: 100%;
+    background: #000;
+    display: none;
+    will-change: opacity;
+}

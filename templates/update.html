@@ -4,51 +4,71 @@
     <meta charset="UTF-8">
     <title>Update book details</title>
 </head>
-<link href="../css/bootstrap.min.css" type="text/css" rel="stylesheet">
+<link href="../css/materialize.min.css" type="text/css" rel="stylesheet">
+<link href="../css/custom.css" type="text/css" rel="stylesheet">
+
 <body>
 <div class="container">
     <h3 class="text-center">Book Management</h3>
     <hr>
     <p><a class="btn btn-primary btn-lg" id="update-back-btn" href="#">Back</a></p>
-    <div class="alert entry alert-dismissible alert-success" style="display: none">
-        Successfully updated entry in database
-    </div>
-    <div class="alert entry-danger alert-dismissible alert-danger" style="display: none">
-        Please fill all fields
-    </div>
     <div id="update-page">
-        <div class="row py-4">
-            <div class="col-sm-4">
-                <input type="text" name="title" class="form-control" placeholder="Title">
+        <div class="row">
+            <div id="card-alert-success" class="card alert green lighten-5 " style="display: none">
+                <div class="card-content green-text">
+                    <p>Successfully updated entry in database</p>
+                </div>
+                <button type="button" class="close green-text" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
             </div>
-            <div class="col-sm-4">
-                <input type="text" name="author" class="form-control" placeholder="Author">
+            <div id="card-alert-error" class="card alert red lighten-5 " style="display: none">
+                <div class="card-content red-text">
+                    <p>Please fill all required field</p>
+                </div>
+                <button type="button" class="close red-text" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
             </div>
-            <div class="col-sm-4">
-                <input type="text" name="topic" class="form-control" placeholder="Topic">
+
+            <div class="input-field col s6">
+                <input id="title" type="text" name="title" class="validate">
+                <label for="title" class="active">Title</label>
+            </div>
+            <div class="input-field col s6">
+                <input id="author" type="text" name="author" class="validate">
+                <label for="author" class="active">Author</label>
             </div>
         </div>
-        <div class="row py-4">
-            <div class="col-sm-4">
-                <input type="text" name="year" class="form-control" placeholder="Year">
+        <div class="row">
+            <div class="input-field col s6">
+                <input id="topic" type="text" name="topic" class="validate">
+                <label for="topic" class="active">Topic</label>
             </div>
-            <div class="col-sm-4">
-                <input type="text" name="isbn" class="form-control" placeholder="ISBN">
-            </div>
-            <div class="col-sm-4">
-                <input type="text" name="sub-topic" class="form-control" placeholder="Sub Topic">
+            <div class="input-field col s6">
+                <input id="year" name="year" type="text" class="validate">
+                <label for="year" class="active">Year</label>
             </div>
         </div>
-        <div class="row my-4">
-            <div class="col-sm-12 text-center">
-                <button type="button" id="update-data-btn" class="btn btn-success">Update</button>
+        <div class="row">
+            <div class="input-field col s6">
+                <input id="isbn" type="text" name="isbn" class="validate">
+                <label for="isbn" class="active">ISBN</label>
+            </div>
+            <div class="input-field col s6">
+                <input id="sub_topic" name="sub-topic" type="text" class="validate">
+                <label for="sub_topic" class="active">Sub Topic</label>
+            </div>
+        </div>
+        <div class="row pt-5">
+            <div class="col s12 center ">
+                <button class="btn waves-effect waves-light " id="update-data-btn" name="action">Update Entry</button>
             </div>
         </div>
     </div>
 </div>
 <script src="../js/jquery.min.js" onload="window.$ = window.jQuery = module.exports;"></script>
-<script src="../js/popper.min.js" ></script>
-<script src="../js/bootstrap.min.js"></script>
+<script src="../js/materialize.min.js"></script>
 <script src="../js/custom.js"></script>
 </body>
 </html>
