@@ -5,16 +5,16 @@
   "main": "main.js",
   "email": "sainineeraj1234@gmail.com",
   "scripts": {
-    "postinstall": "install-app-deps",
-    "start": "electron .",
+    "postinstall": "electron-builder install-app-deps",
+    "start": "npm install & electron .",
     "pack": "build --dir",
     "dist": "build"
   },
   "repository": "https://github.com/dh2638/desktop-database",
   "keywords": [
     "Electron",
-    "book",
-    "management"
+    "Book",
+    "Management"
   ],
   "author": {
     "name": "Neeraj Kumar",

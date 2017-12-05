@@ -6,55 +6,125 @@
 </head>
 <link href="../css/materialize.min.css" type="text/css" rel="stylesheet">
 <link href="../css/custom.css" type="text/css" rel="stylesheet">
+<link href="../css/jquery.dataTables.min.css" type="text/css" rel="stylesheet">
 <body>
 <div class="container">
     <h3 class="center">Book Management</h3>
     <hr>
-    <div class="row pt-5">
-        <div class="col s12 m6 l4">
-            <div class="card">
-                <div class="card-content  green white-text center clickable" id="add-new_entry-btn">
-                    <h5 class="card-stats-title py-2"><i class="mdi-content-add"></i> Add New Book</h5>
-                </div>
-            </div>
+    <div class="row">
+        <div class=" col s4">
+            <input id="search" type="search" name="search" placeholder="Enter text for search..." class="validate">
         </div>
-        <div class="col s12 m6 l4">
-            <div class="card">
-                <div class="card-content pink lighten-1 white-text center clickable" id="view-all-btn">
-                    <h5 class="card-stats-title py-2"><i class="mdi-action-list"></i> Show All Books</h5>
-                </div>
-            </div>
-        </div>
-        <div class="col s12 m6 l4">
-            <div class="card">
-                <a href="#search-model" class="modal-trigger">
-                    <div class="card-content blue-grey white-text center clickable">
-                        <h5 class="card-stats-title py-2"><i class="mdi-action-search"></i> Search Book</h5>
-                    </div>
-                </a>
-            </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <table class="table bordered striped centered" id="datatable">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">No.</th>
+                    <th scope="col"></th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Author</th>
+                    <th scope="col">Topic</th>
+                    <th scope="col">Year</th>
+                    <th scope="col">ISBN</th>
+                    <th scope="col">Sub Topic</th>
+                </tr>
+                </thead>
+                <tbody>
+                <script id="list-template" type="text/x-handlebars-template">
+                    <tr>
+                        <th scope="row">{{ counter }}</th>
+                        <th scope="row">
+                            <input type="checkbox" name="counter_{{ id }}" value="{{ id }}" class="filled-in"
+                                   id="filled-in-{{ id }}">
+                            <label for="filled-in-{{ id }}"></label>
+                        </th>
+                        <td><a class="update-data" href="#" data-id="{{ id }}">{{ title }}</a></td>
+                        <td>{{ author }}</td>
+                        <td>{{ topic }}</td>
+                        <td>{{ year }}</td>
+                        <td>{{ isbn }}</td>
+                        <td>{{ sub_topic }}</td>
+                    </tr>
+                </script>
+                </tbody>
+            </table>
+            <input class="btn pt-1" id="delete-selected" type="submit" value="Delete Seleted">
         </div>
     </div>
 </div>
 
-<!-- Modal Structure -->
-<div id="search-model" class="modal">
+<div class="fixed-action-btn" style="bottom: 50px; right: 19px;">
+    <a class="btn-floating btn-large modal-trigger" href="#entry-model">
+        <i class="mdi-content-add"></i>
+    </a>
+</div>
+<div id="entry-model" class="modal">
     <div class="modal-content">
+        <h4 class="title">Add New Book</h4>
+        <form id="entry-form">
         <div class="row">
-            <div class="input-field col s12">
-                <input id="title" type="text" name="search" class="validate">
-                <label for="title" class="active">Search</label>
+            <div id="card-alert-success" class="card alert green lighten-5 " style="display: none">
+                <div class="card-content green-text">
+                    <p class="successful-msg">New Entry added successfully</p>
+                </div>
+                <button type="button" class="close green-text" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div id="card-alert-error" class="card alert red lighten-5 " style="display: none">
+                <div class="card-content red-text">
+                    <p>Please fill all required field</p>
+                </div>
+                <button type="button" class="close red-text" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+
+            <div class="input-field col s6">
+                <input id="title" type="text" name="title" class="validate">
+                <label for="title" class="active">Title</label>
+            </div>
+            <div class="input-field col s6">
+                <input id="author" type="text" name="author" class="validate">
+                <label for="author">Author</label>
             </div>
         </div>
+        <div class="row">
+            <div class="input-field col s6">
+                <input id="topic" type="text" name="topic" class="validate">
+                <label for="topic" class="active">Topic</label>
+            </div>
+            <div class="input-field col s6">
+                <input id="year" name="year" type="text" class="validate">
+                <label for="year">Year</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s6">
+                <input id="isbn" type="text" name="isbn" class="validate">
+                <label for="isbn" class="active">ISBN</label>
+            </div>
+            <div class="input-field col s6">
+                <input id="sub_topic" name="sub-topic" type="text" class="validate">
+                <label for="sub_topic">Sub Topic</label>
+            </div>
+        </div>
+        <input type="hidden" name="id" value="">
+        </form>
     </div>
-    <div class="modal-footer green ">
-        <button type="submit" id="search-entry" class=" white-text modal-action modal-close waves-effect waves-green btn-flat">Search</button>
+    <div class="modal-footer">
+        <button class="btn waves-light " id="add-entry" name="action">Add Entry</button>
     </div>
+
 </div>
+
 <div class="lean-overlay"></div>
 <script src="../js/jquery.min.js" onload="window.$ = window.jQuery = module.exports;"></script>
 <script src = "../js/materialize.min.js" ></script>
 <script src="../js/custom.js"></script>
+<script src="../js/jquery.dataTables.min.js"></script>
 
 </body>
 </html>

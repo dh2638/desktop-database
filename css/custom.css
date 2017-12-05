@@ -5,24 +5,31 @@
     -webkit-transform: translateY(-50%);
     -ms-transform: translateY(-50%);
 }
-.brand-header img{
+
+.brand-header img {
     width: 200px
 }
-.pb-5{
+
+.pb-5 {
     padding-bottom: 5rem;
 }
-.pt-5{
+
+.pt-5 {
     padding-top: 5rem;
 }
-.clickable{
+
+.clickable {
     cursor: pointer;
 }
-.pt-1{
+
+.pt-1 {
     margin-top: 1rem;
 }
-.py-2{
-    padding:2rem 0;
+
+.py-2 {
+    padding: 2rem 0;
 }
+
 .alert button {
     background: none;
     border: none;
@@ -32,6 +39,7 @@
     font-size: 20px;
     color: #fff;
 }
+
 .modal-overlay {
     position: fixed;
     z-index: 999;
@@ -44,4 +52,8 @@
     background: #000;
     display: none;
     will-change: opacity;
+}
+
+.dataTables_filter, .dataTables_info {
+    display: none;
 }
